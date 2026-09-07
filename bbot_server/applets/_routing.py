@@ -242,6 +242,7 @@ class HTTPStreamRoute(BaseServerRoute):
         wrapper.__name__ = self.orig_function.__name__
         wrapper.__qualname__ = self.orig_function.__qualname__
         wrapper.__signature__ = inspect.signature(self.orig_function)
+        wrapper.__doc__ = self.orig_function.__doc__
         return wrapper
 
     def add_to_router(self, router, **fastapi_kwargs):
