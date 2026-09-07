@@ -84,7 +84,9 @@ class FindingsApplet(BaseApplet):
         async for finding in query.mongo_iter(self):
             yield Finding(**finding)
 
-    @api_endpoint("/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query findings", mcp=True)
+    @api_endpoint(
+        "/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query findings", mcp=True
+    )
     async def query_findings(self, query: FindingsQuery | None = None):
         """
         Advanced querying of findings. Choose your own filters and fields.

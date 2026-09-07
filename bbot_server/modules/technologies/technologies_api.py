@@ -32,7 +32,12 @@ class TechnologiesApplet(BaseApplet):
         return Technology(**(await self.root._get_asset(type="Technology", id=id)))
 
     @api_endpoint(
-        "/list", methods=["GET"], type="http_stream", response_model=Technology, summary="List all technologies", mcp=True
+        "/list",
+        methods=["GET"],
+        type="http_stream",
+        response_model=Technology,
+        summary="List all technologies",
+        mcp=True,
     )
     async def list_technologies(
         self,
@@ -60,7 +65,9 @@ class TechnologiesApplet(BaseApplet):
         async for technology in query.mongo_iter(self):
             yield Technology(**technology)
 
-    @api_endpoint("/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query technologies", mcp=True)
+    @api_endpoint(
+        "/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query technologies", mcp=True
+    )
     async def query_technologies(self, query: TechnologyQuery | None = None):
         """
         Advanced querying of technologies. Choose your own filters and fields.

@@ -13,7 +13,9 @@ class AssetsApplet(BaseApplet):
 
     model = Asset
 
-    @api_endpoint("/list", methods=["GET"], type="http_stream", response_model=Asset, summary="Stream all assets", mcp=True)
+    @api_endpoint(
+        "/list", methods=["GET"], type="http_stream", response_model=Asset, summary="Stream all assets", mcp=True
+    )
     async def list_assets(
         self,
         domain: Annotated[str, Query(description="Filter assets by domain or subdomain")] = None,
@@ -27,7 +29,9 @@ class AssetsApplet(BaseApplet):
         async for asset in query.mongo_iter(self):
             yield self.model(**asset)
 
-    @api_endpoint("/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query assets", mcp=True)
+    @api_endpoint(
+        "/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query assets", mcp=True
+    )
     async def query_assets(self, query: AdvancedAssetQuery | None = None):
         """
         Advanced querying of assets. Choose your own filters and fields.

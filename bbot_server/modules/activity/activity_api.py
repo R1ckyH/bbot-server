@@ -16,7 +16,12 @@ class ActivityApplet(BaseApplet):
         await self.collection.insert_one(activity.model_dump())
 
     @api_endpoint(
-        "/list", methods=["GET"], type="http_stream", response_model=Activity, summary="Stream all activities", mcp=True
+        "/list",
+        methods=["GET"],
+        type="http_stream",
+        response_model=Activity,
+        summary="Stream all activities",
+        mcp=True,
     )
     async def list_activities(self, host: str = None, type: str = None):
         query = {}
@@ -27,7 +32,9 @@ class ActivityApplet(BaseApplet):
         async for activity in self.collection.find(query, sort=[("timestamp", 1), ("created", 1)]):
             yield self.model(**activity)
 
-    @api_endpoint("/query", methods=["POST"], type="http_stream", response_model=dict, summary="List activities", mcp=True)
+    @api_endpoint(
+        "/query", methods=["POST"], type="http_stream", response_model=dict, summary="List activities", mcp=True
+    )
     async def query_activities(self, query: ActivityQuery | None = None):
         """
         Advanced querying of activities. Choose your own filters and fields.

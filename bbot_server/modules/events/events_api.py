@@ -39,7 +39,9 @@ class EventsApplet(BaseApplet):
             raise self.BBOTServerNotFoundError(f"Event {uuid} not found")
         return Event(**event)
 
-    @api_endpoint("/list", methods=["GET"], type="http_stream", response_model=Event, summary="Stream all events", mcp=True)
+    @api_endpoint(
+        "/list", methods=["GET"], type="http_stream", response_model=Event, summary="Stream all events", mcp=True
+    )
     async def list_events(
         self,
         type: str = None,
@@ -64,7 +66,9 @@ class EventsApplet(BaseApplet):
         async for event in query.mongo_iter(self):
             yield Event(**event)
 
-    @api_endpoint("/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query events", mcp=True)
+    @api_endpoint(
+        "/query", methods=["POST"], type="http_stream", response_model=dict, summary="Query events", mcp=True
+    )
     async def query_events(self, query: EventsQuery | None = None):
         """
         Advanced querying of events. Choose your own filters and fields.
