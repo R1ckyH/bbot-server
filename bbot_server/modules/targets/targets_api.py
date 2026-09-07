@@ -284,21 +284,21 @@ class TargetsApplet(BaseApplet):
     async def in_scope(self, host: str, target_id: UUID = None) -> bool:
         bbot_target = await self._get_bbot_target(target_id)
         if bbot_target is None:
-            return False
+            raise self.BBOTServerNotFoundError(f"Target not found: {target_id if target_id else 'default'}")
         return bbot_target.in_scope(host)
 
     @api_endpoint("/in-target", methods=["GET"], summary="Check if a host or URL is in the target", mcp=True)
     async def is_in_target(self, host: str, target_id: UUID = None) -> bool:
         bbot_target = await self._get_bbot_target(target_id)
         if bbot_target is None:
-            return False
+            raise self.BBOTServerNotFoundError(f"Target not found: {target_id if target_id else 'default'}")
         return bbot_target.in_target(host)
 
     @api_endpoint("/blacklisted", methods=["GET"], summary="Check if a host or URL is blacklisted", mcp=True)
     async def is_blacklisted(self, host: str, target_id: UUID = None) -> bool:
         bbot_target = await self._get_bbot_target(target_id)
         if bbot_target is None:
-            return False
+            raise self.BBOTServerNotFoundError(f"Target not found: {target_id if target_id else 'default'}")
         return bbot_target.blacklisted(host)
 
     @api_endpoint("/list", methods=["GET"], summary="List targets", mcp=True)
